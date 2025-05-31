@@ -89,6 +89,9 @@ export class CandidateService {
       );
 
       if (candidate) {
+        Logger.debug(
+          `[CandidateService] Candidates with email ${email} found in cache`,
+        );
         return candidate;
       }
     }
@@ -98,5 +101,61 @@ export class CandidateService {
     );
     const candidates = await this._retrieveCandidates();
     return candidates.find((candidate) => candidate.email === email) || null;
+  }
+
+  async getCandidateByNik(nik: string): Promise<Candidate | null> {
+    Logger.debug(
+      `[CandidateService] Retrieving candidate by nik: ${nik} from redis`,
+    );
+
+    const cachedCandidates: Candidate[] | null =
+      await this.redis.get<Candidate[]>('candidates');
+
+    if (cachedCandidates && cachedCandidates.length > 0) {
+      const candidate = cachedCandidates.find(
+        (candidate) => candidate.nik === nik,
+      );
+
+      if (candidate) {
+        Logger.debug(
+          `[CandidateService] Candidates with nik ${nik} found in cache`,
+        );
+        return candidate;
+      }
+    }
+
+    Logger.debug(
+      `[CandidateService] Candidate with nik: ${nik} not found in cache, retrieving from ms-candidates`,
+    );
+    const candidates = await this._retrieveCandidates();
+    return candidates.find((candidate) => candidate.nik === nik) || null;
+  }
+
+  async getCandidateByBatch(batch: string): Promise<Candidate[] | null> {
+    Logger.debug(
+      `[CandidateService] Retrieving candidates with batch: ${batch} from redis`,
+    );
+
+    const cachedCandidates: Candidate[] | null =
+      await this.redis.get<Candidate[]>('candidates');
+
+    if (cachedCandidates && cachedCandidates.length > 0) {
+      const candidate = cachedCandidates.filter(
+        (candidate) => candidate.batch === batch,
+      );
+
+      if (candidate.length > 0) {
+        Logger.debug(
+          `[CandidateService] Candidates with batch ${batch} found in cache with total ${candidate.length}`,
+        );
+        return candidate;
+      }
+    }
+
+    Logger.debug(
+      `[CandidateService] Candidate with batch: ${batch} not found in cache, retrieving from ms-candidates`,
+    );
+    const candidates = await this._retrieveCandidates();
+    return candidates.filter((candidate) => candidate.batch === batch) || null;
   }
 }

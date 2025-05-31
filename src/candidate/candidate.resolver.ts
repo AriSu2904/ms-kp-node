@@ -15,4 +15,14 @@ export class CandidateResolver {
   async getCandidateByEmail(@Args('email') email: string) {
     return await this.candidateService.getCandidateByEmail(email);
   }
+
+  @Query(() => Candidate, { nullable: true })
+  async getCandidateByNik(@Args('nik') nik: string) {
+    return await this.candidateService.getCandidateByNik(nik);
+  }
+
+  @Query(() => [Candidate], { nullable: true })
+  async candidatesInBatch(@Args('batch') batch: string) {
+    return await this.candidateService.getCandidateByBatch(batch);
+  }
 }

@@ -27,4 +27,6 @@ type Candidate {
 type Query {
   listCandidates: [Candidate!]!
   getCandidateByEmail(email: String!): Candidate
+  getCandidateByNik(nik: String!): Candidate
+  candidatesInBatch(batch: String!): [Candidate!]
 }

@@ -1,4 +1,7 @@
 export default () => ({
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
   service: {
     candidate: {
       baseUrl: process.env.MS_CANDIDATES_BASE_URL || 'http://localhost:3000',

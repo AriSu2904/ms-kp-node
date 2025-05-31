@@ -5,5 +5,5 @@ export class User {
   @Field()
   nik: string;
   @Field()
-  password: string;
+  token: string;
 }

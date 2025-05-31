@@ -24,9 +24,19 @@ type Candidate {
   technicalScore: Score
 }
 
+type User {
+  nik: String!
+  token: String!
+}
+
 type Query {
   listCandidates: [Candidate!]!
   getCandidateByEmail(email: String!): Candidate
   getCandidateByNik(nik: String!): Candidate
   candidatesInBatch(batch: String!): [Candidate!]
+}
+
+type Mutation {
+  loginToken(nik: String!, token: String!): User!
+  requestToken(nik: String!, fullName: String!): User!
 }

@@ -3,14 +3,15 @@ import { Candidate } from './model/candidate.model';
 import { HttpService } from '@nestjs/axios';
 import { CandidateDto } from './dto/candidate.dto';
 import { firstValueFrom } from 'rxjs';
-import * as process from 'node:process';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CandidateService {
   constructor(
     private readonly http: HttpService,
     @Inject(CACHE_MANAGER) private redis: Cache,
+    private readonly config: ConfigService,
   ) {}
 
   _mappedCandidate(candidates: CandidateDto[]): Candidate[] {
@@ -36,8 +37,9 @@ export class CandidateService {
   async _retrieveCandidates(): Promise<Candidate[]> {
     Logger.debug('[CandidateService] Requesting candidates from ms-candidates');
 
-    const baseUrl = process.env.MS_CANDIDATES_BASE_URL;
-    const xIdToken = process.env.X_ID_TOKEN;
+    const baseUrl = this.config.get<string>('service.candidate.baseUrl');
+    const xIdToken = this.config.get<string>('service.candidate.xIdToken');
+
     try {
       const candidates = await firstValueFrom(
         this.http.get<CandidateDto[]>(`${baseUrl}/candidates`, {

@@ -1,8 +1,11 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { CandidateService } from './candidate.service';
 import { Candidate } from './model/candidate.model';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Resolver(() => Candidate)
+@UseGuards(AuthGuard)
 export class CandidateResolver {
   constructor(private readonly candidateService: CandidateService) {}
 

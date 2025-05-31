@@ -58,6 +58,7 @@ export class CandidateService {
 
       return mappedCandidates;
     } catch (error) {
+      console.log(error);
       Logger.error('[CandidateService] Error retrieving candidates', error);
 
       return [];

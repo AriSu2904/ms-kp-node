@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Score {
+  basicTest: Int
+  mathTest: Int
+  codingTest: Int
+}
+
+type Candidate {
+  firstName: String
+  lastName: String
+  nik: String
+  nickName: String
+  email: String
+  phone: String
+  dob: String
+  address: String
+  batch: String
+  status: String
+  skills: [String]
+  experience: Int
+  technicalScore: Score
+}
+
+type Query {
+  listCandidates: [Candidate!]!
+  getCandidateByEmail(email: String!): Candidate
+}

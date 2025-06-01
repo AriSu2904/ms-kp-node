@@ -82,7 +82,6 @@ export class UserService {
 
     await this.redis.set(`user-${nik}`, tokenObj);
     const token = Buffer.from(jsonStr).toString('base64url');
-
     return {
       nik,
       token,

@@ -16,6 +16,9 @@ export class CandidateService {
 
   _mappedCandidate(candidates: CandidateDto[]): Candidate[] {
     return candidates.map((candidate) => {
+
+      console.log(`[ARI] Current candidate with scores ${candidate.nik}`, candidate.scores);
+
       return {
         firstName: candidate.firstName,
         lastName: candidate.lastName,
@@ -44,7 +47,7 @@ export class CandidateService {
       const candidates = await firstValueFrom(
         this.http.get<CandidateDto[]>(`${baseUrl}/candidates`, {
           headers: {
-            'X-Id-Token': xIdToken,
+            'X-ID-Token': xIdToken,
           },
         }),
       );
@@ -58,7 +61,6 @@ export class CandidateService {
 
       return mappedCandidates;
     } catch (error) {
-      console.log(error);
       Logger.error('[CandidateService] Error retrieving candidates', error);
 
       return [];

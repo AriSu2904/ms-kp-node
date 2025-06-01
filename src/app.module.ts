@@ -10,6 +10,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/env.config';
 import { JwtModule } from '@nestjs/jwt';
+import { ForecastModule } from './forecast/forecast.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     CandidateModule,
     UserModule,
+    ForecastModule,
   ],
   controllers: [AppController],
   providers: [AppService],

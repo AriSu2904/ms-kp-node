@@ -7,5 +7,6 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [HttpModule, ConfigModule],
   providers: [CandidateResolver, CandidateService],
+  exports: [CandidateService],
 })
 export class CandidateModule {}

@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Score } from './score.model';
+import { Forecast } from './forecast.model';
 
 @ObjectType()
 export class Candidate {
@@ -41,4 +42,7 @@ export class Candidate {
 
   @Field(() => Score, { nullable: true })
   technicalScore?: Score;
+
+  @Field(() => Forecast, { nullable: true })
+  forecastResult?: Forecast;
 }

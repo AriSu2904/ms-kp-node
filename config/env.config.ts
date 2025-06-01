@@ -10,5 +10,10 @@ export default () => ({
     admin: {
       baseUrl: process.env.MS_ADMIN_BASE_URL || 'http://localhost:3001',
     },
+    machineLearning: {
+      baseUrl:
+        process.env.MS_MACHINE_LEARNING_BASE_URL || 'http://localhost:3002',
+      xIdToken: process.env.MS_MACHINE_LEARNING_X_ID_TOKEN || 'DEFAULT',
+    },
   },
 });

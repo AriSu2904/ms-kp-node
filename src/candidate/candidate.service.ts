@@ -16,9 +16,6 @@ export class CandidateService {
 
   _mappedCandidate(candidates: CandidateDto[]): Candidate[] {
     return candidates.map((candidate) => {
-
-      console.log(`[ARI] Current candidate with scores ${candidate.nik}`, candidate.scores);
-
       return {
         firstName: candidate.firstName,
         lastName: candidate.lastName,

@@ -3,6 +3,7 @@ export type ForecastRequestDto = {
   firstName: string;
   lastName: string;
   skills: string[];
+  totalSkills: number;
   experience: number;
   technicalScore: {
     basicTest: number;

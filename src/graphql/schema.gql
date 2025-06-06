@@ -47,4 +47,5 @@ type Mutation {
   loginToken(nik: String!, token: String!): User!
   requestToken(nik: String!, fullName: String!): User!
   predictCandidate(nik: String!): Candidate!
+  batchPrediction(batch: String!): [Candidate!]!
 }

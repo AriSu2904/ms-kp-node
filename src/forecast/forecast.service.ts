@@ -87,6 +87,7 @@ export class ForecastService {
       firstName: candidate.firstName,
       lastName: candidate.lastName,
       skills: candidate.skills || [],
+      totalSkills: candidate.skills?.length || 0,
       experience: candidate.experience || 0,
       technicalScore: {
         basicTest: candidate.technicalScore?.basicTest || 0,
@@ -108,5 +109,23 @@ export class ForecastService {
     ]);
 
     return forecastResult[0] || new Error('No forecast result found');
+  }
+
+  async batchForecast(batch: string): Promise<Candidate[]> {
+    const candidates = await this.candidateService.getCandidateByBatch(batch);
+
+    if (!candidates || candidates.length === 0) {
+      throw new NotFoundException(`No candidates found for batch ${batch}`);
+    }
+
+    const forecastRequests = candidates.map((candidate) =>
+      this._mapForecastRequest(candidate),
+    );
+
+    Logger.debug(
+      `[ForecastService] Requesting forecast for batch ${batch} with total candidates: ${forecastRequests.length}`,
+    );
+
+    return await this._requestForecast(forecastRequests);
   }
 }

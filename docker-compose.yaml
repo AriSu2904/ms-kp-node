@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ms-candidates:
+    container_name: mock-server-container
+    image: mock-server
+    ports:
+      - "8000:8000"
+
+  ms-screening:
+    container_name: ms-screening-container
+    image: ms-screening
+    ports:
+      - "3003:3003"
+
+  ms-kp-js:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ms-kp-js-container
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
+    depends_on:
+      - ms-candidates
+      - ms-screening
